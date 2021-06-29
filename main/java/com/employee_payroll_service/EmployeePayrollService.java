@@ -57,5 +57,9 @@ public class EmployeePayrollService {
 			return 0;
 	}
 
-	
+	// print file data
+	public void printData(IOService ioService) {
+			if (ioService.equals(IOService.FILE_IO))
+				new EmployeePayrollFileIOService().printData();
+		}
 }

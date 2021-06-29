@@ -30,4 +30,13 @@ public class EmployeePayrollFileIOService {
 		}
 		return entriesNum;
 	}
+	
+	// print file data
+	public void printData() {
+			try {
+				Files.lines(new File(PAYROLL_FILE_NAME).toPath()).forEach(System.out::println);
+			} catch(IOException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 }
