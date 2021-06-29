@@ -1,5 +1,6 @@
 package com.employee_payroll_service;
 
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,13 +11,12 @@ public class EmployeePayrollService {
 		CONSOLE_IO, FILE_IO, DB_IO, REST_IO
 	}
 	
-	public ArrayList<EmployeeDetails> employeedetails;
+	private List<EmployeeDetails> employeedetails;
 
-	public EmployeePayrollService(ArrayList<EmployeeDetails> employeedetails) {
-		
-		this.employeedetails = employeedetails;
+	public EmployeePayrollService(List<EmployeeDetails> empPayrollList) {
+		this.employeedetails = empPayrollList;
 	}
-	
+
 	public static void main(String[] args) 
 	{
 		System.out.println("Welcome to the Employee Payroll Service.");
@@ -24,7 +24,7 @@ public class EmployeePayrollService {
 		ArrayList<EmployeeDetails> employeePayrollList = new ArrayList<>();
 		EmployeePayrollService empPayrollService = new EmployeePayrollService(employeePayrollList);
 		empPayrollService.readEmployeePayrollData(consoleInput);
-		empPayrollService.writeEmployeePayrollData();
+		empPayrollService.writeToConsole();
 	}
 
 	private void readEmployeePayrollData(Scanner consoleInputReader)
@@ -38,8 +38,23 @@ public class EmployeePayrollService {
 		employeedetails.add(new EmployeeDetails(id, name, salary));
 	}
 
-	private void writeEmployeePayrollData() {
-		System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeedetails);
+	private void writeToConsole() {
+		System.out.println("\nWriting emp payroll roaster to console\n" + employeedetails);
+	}
+	
+	// write to file using File IO
+	public void writeEmployeePayrollData(IOService ioService) 
+	{
+			if (ioService.equals(IOService.FILE_IO)) {
+				new EmployeePayrollFileIOService().writeData(employeedetails);
+			}
+	}
+	// count the entries
+	public long countEntries(IOService ioService) 
+	{
+			if (ioService.equals(IOService.FILE_IO))
+				return new EmployeePayrollFileIOService().countEntries();
+			return 0;
 	}
 
 	
